@@ -22,7 +22,7 @@ questions_and_answers = {"Как дела?": "Хорошо!", "Что делае
 def ask_user(answers_dict):
     while True:
         question = input('Пользователь ваш вопрос:')
-        if question in answers_dict.keys():
+        if question in answers_dict.keys(): # или тут лучше использовать if answers_dict.get(question) != None:
                 print(f'Программа: {answers_dict[question]}')
                 return # or break ???
         else: print('Такого вопроса в базе НЕТ. Попробуйде другой вопрос.')
