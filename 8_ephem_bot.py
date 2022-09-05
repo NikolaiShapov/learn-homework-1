@@ -13,8 +13,10 @@
 
 """
 import logging
-
+import ephem
+from datetime import datetime
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+import settings #Токен Бота от судю
 
 logging.basicConfig(format='%(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO,
@@ -39,15 +41,35 @@ def greet_user(update, context):
 def talk_to_me(update, context):
     user_text = update.message.text
     print(user_text)
-    update.message.reply_text(text)
+    update.message.reply_text(user_text)
+
+def planet_in_the_constellation(update, context):
+    user_command, planet, *_ = update.message.text.split()
+    print(user_command, planet)
+    planet_list = {'Jupiter': ephem.Jupiter(datetime.today()),
+            'Mars': ephem.Mars(datetime.today()),
+            'Mercury': ephem.Mercury(datetime.today()),
+            'Moon': ephem.Moon(datetime.today()),
+            'Neptune': ephem.Neptune(datetime.today()),
+            'Pluto': ephem.Pluto(datetime.today()),
+            'Saturn': ephem.Saturn(datetime.today()),
+            'Sun': ephem.Sun(datetime.today()),
+            'Uranus': ephem.Uranus(datetime.today()),
+            'Venus': ephem.Venus(datetime.today())}
+    if planet_list.get(planet):
+        constellation = ephem.constellation(planet_list.get(planet))
+        update.message.reply_text(f'планета {planet} сегодня находится в созвездии - {constellation[-1]}')
+    else: update.message.reply_text('Это не планета!')
 
 
 def main():
-    mybot = Updater("КЛЮЧ, КОТОРЫЙ НАМ ВЫДАЛ BotFather", request_kwargs=PROXY, use_context=True)
+    mybot = Updater(settings.API_KEY, use_context=True)
 
     dp = mybot.dispatcher
     dp.add_handler(CommandHandler("start", greet_user))
+    dp.add_handler(CommandHandler("planet", planet_in_the_constellation))
     dp.add_handler(MessageHandler(Filters.text, talk_to_me))
+
 
     mybot.start_polling()
     mybot.idle()
