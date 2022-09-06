@@ -41,12 +41,13 @@ def greet_user(update, context):
 def talk_to_me(update, context):
     user_text = update.message.text
     print(user_text)
+    print(update)
     update.message.reply_text(user_text)
 
 def planet_in_the_constellation(update, context):
     user_command, planet, *_ = update.message.text.split()
     print(user_command, planet)
-    planet_list = {'Jupiter': ephem.Jupiter(datetime.today()),
+    planet_dict = {'Jupiter': ephem.Jupiter(datetime.today()),
             'Mars': ephem.Mars(datetime.today()),
             'Mercury': ephem.Mercury(datetime.today()),
             'Moon': ephem.Moon(datetime.today()),
@@ -56,8 +57,8 @@ def planet_in_the_constellation(update, context):
             'Sun': ephem.Sun(datetime.today()),
             'Uranus': ephem.Uranus(datetime.today()),
             'Venus': ephem.Venus(datetime.today())}
-    if planet_list.get(planet):
-        constellation = ephem.constellation(planet_list.get(planet))
+    if planet_dict.get(planet):
+        constellation = ephem.constellation(planet_dict.get(planet))
         update.message.reply_text(f'планета {planet} сегодня находится в созвездии - {constellation[-1]}')
     else: update.message.reply_text('Это не планета!')
 
