@@ -22,10 +22,13 @@ questions_and_answers = {"Как дела?": "Хорошо!", "Что делае
 def ask_user(answers_dict):
     while True:
         question = input('Пользователь ваш вопрос:')
-        if question in answers_dict.keys(): # или тут лучше использовать if answers_dict.get(question) != None:
-                print(f'Программа: {answers_dict[question]}')
-                return # or break ???
-        else: print('Такого вопроса в базе НЕТ. Попробуйде другой вопрос.')
+        if question in answers_dict:
+            print(f'Программа: {answers_dict[question]}')
+        elif question.strip().lower() == 'до скорого':
+            print(f'Программа: ПОКА ПОка... пока!')
+            return
+        else:
+            print('Такого вопроса в базе НЕТ. Попробуйде другой вопрос.')
 
 if __name__ == "__main__":
     ask_user(questions_and_answers)
