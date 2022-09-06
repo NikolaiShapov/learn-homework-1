@@ -23,15 +23,16 @@ bd_list = [
 
 def main(bd):
     all_product = 0
+    period = 12
     for item_for_sale in bd:
         name_item = item_for_sale['product']
         summa = sum(item_for_sale['items_sold'])
         print(name_item, 'суммарное количество продаж:', summa)
         mean = summa/len(item_for_sale['items_sold'])
-        print(name_item, 'среднее количество продаж:', int(round(mean, 0)))
+        print(name_item, 'среднее количество продаж:', round(mean))
         all_product += summa
     print('суммарное количество продаж всех товаров:', all_product)
-    mean_all = int(round(all_product/len(item_for_sale['items_sold'])))
+    mean_all = round(all_product/period)
     print('среднее количество продаж всех товаров: ', mean_all)
 
 if __name__ == "__main__":
