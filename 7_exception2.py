@@ -20,7 +20,7 @@ def discounted(price, discount, max_discount=20):
         max_discount = abs(int(max_discount))
     except (TypeError, ValueError) as erro_text:
         print(erro_text)
-        return(None)
+        return None
     if max_discount >= 100:
         raise ValueError("Слишком большая максимальная скидка")
     if discount >= max_discount:
